@@ -32,6 +32,7 @@ public class SystemManager : MonoBehaviour
 
     //End Game Panel
     GameObject endGamePanel;
+    GameObject endPanelBackground;
     GameObject gameResultText;
     GameObject replayButton;
     GameObject quitButton;
@@ -58,8 +59,6 @@ public class SystemManager : MonoBehaviour
 
     GameObject player1MsgText;
     GameObject player2MsgText;
-
-
     
     //Member Variables 
     GameObject networkedClient;
@@ -71,15 +70,6 @@ public class SystemManager : MonoBehaviour
         SetupUserInterface();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
-
-   
     //Login and Create Account Functions 
     public void LoginTogglePressed(bool newValue)
     {
@@ -205,18 +195,18 @@ public class SystemManager : MonoBehaviour
         {
             //Player Lose
             case 0:
-                endGamePanel.GetComponent<Image>().color = Color.red;
+                endPanelBackground.GetComponent<Image>().color = Color.red;
                 gameResultText.GetComponent<Text>().text = "You Have Lost!";
                 break;
 
             //Player Win
             case 1:
-                endGamePanel.GetComponent<Image>().color = Color.blue;
+                endPanelBackground.GetComponent<Image>().color = Color.blue;
                 gameResultText.GetComponent<Text>().text = "You Have Won!";
                 break;
             //Observer End
             case 3:
-                endGamePanel.GetComponent<Image>().color = Color.yellow;
+                endPanelBackground.GetComponent<Image>().color = Color.yellow;
                 gameResultText.GetComponent<Text>().text = "Game Over!";
                 break;
 
@@ -327,6 +317,8 @@ public class SystemManager : MonoBehaviour
             //Get EndGame Panel Elements 
             else if (go.name == "EndGamePanel")
                 endGamePanel = go;
+            else if (go.name == "BG")
+                endPanelBackground = go;
             else if (go.name == "ResultText")
                 gameResultText = go;
             else if (go.name == "ReplayButton")
@@ -375,16 +367,9 @@ public class SystemManager : MonoBehaviour
             else if (go.name == "Player2Text")
                 player2MsgText = go;
 
-
-            //Opponent Panel
-
-
-
             //Get Networked Client 
             else if (go.name == "NetworkedClient")
-                networkedClient = go;
-          
-          
+                networkedClient = go;          
         }
 
         //Login Buttons and Toggle Setup
