@@ -37,6 +37,9 @@ public class SystemManager : MonoBehaviour
     GameObject replayButton;
     GameObject quitButton;
 
+    GameObject requestReplayButton;
+    GameObject waitingRematchText;
+
     GameObject replayBlock;
     GameObject replayText;
 
@@ -116,6 +119,12 @@ public class SystemManager : MonoBehaviour
     public void QuitButtonPressed()
     {
         Application.Quit();
+    }
+
+    public void RequestReplayButtonPressed()
+    {
+        waitingRematchText.SetActive(true);
+        networkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifiers.PlayerRequestRematch + "");
     }
 
 
@@ -215,6 +224,7 @@ public class SystemManager : MonoBehaviour
         }
     }
 
+   
 
     //Game States and Game UI
     public void ChangeState(int newState)
@@ -225,6 +235,7 @@ public class SystemManager : MonoBehaviour
         waitingPanel.SetActive(false);
         gameboard.SetActive(false);
         endGamePanel.SetActive(false);
+        waitingRematchText.SetActive(false);
         hudPanel.SetActive(false);
 
         player1MsgBlock.SetActive(false);
@@ -325,7 +336,10 @@ public class SystemManager : MonoBehaviour
                 replayButton = go;
             else if (go.name == "QuitButton")
                 quitButton = go;
-
+            else if (go.name == "RequestReplayButton")
+                requestReplayButton = go;
+            else if (go.name == "RematchText")
+                waitingRematchText = go;
             else if (go.name == "ReplayBlock")
                 replayBlock = go;
             else if (go.name == "ReplayText")
@@ -388,6 +402,8 @@ public class SystemManager : MonoBehaviour
 
         replayButton.GetComponent<Button>().onClick.AddListener(ReplayButtonPressed);
         quitButton.GetComponent<Button>().onClick.AddListener(QuitButtonPressed);
+
+        requestReplayButton.GetComponent<Button>().onClick.AddListener(RequestReplayButtonPressed);
 
         //Set beginning Game State
         ChangeState(GameStates.LoginMenu);

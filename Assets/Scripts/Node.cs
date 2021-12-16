@@ -88,4 +88,11 @@ public class Node : MonoBehaviour
         isOccupied = true;
     }
 
+    public void ResetNode()
+    {
+        NodeMark = Mark.NONE;
+        spriteRenderer.sprite = null;
+        isOccupied = false;
+    }
+
 }

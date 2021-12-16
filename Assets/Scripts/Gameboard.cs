@@ -100,15 +100,25 @@ public class Gameboard : MonoBehaviour
         }
     }
 
+    private void ClearGameBoard()
+    {
+        foreach (Node node in nodes)
+        {
+            node.ResetNode();
+        }
+    }
 
 
-
+    public void Rematch()
+    {
+        ClearGameBoard();
+    }
 
 
     //
     // Game Win Condition Check
     //
-    
+
     //Check for all possbile win conditions 
     public bool CheckForWin()
     {

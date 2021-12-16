@@ -141,7 +141,6 @@ public class NetworkedClient : MonoBehaviour
             SendMessageToHost(ClientToServerSignifiers.PlayGame + "");
         }
 
-        
         //Set Player Number Check
         else if (signifier == ServerToClientSignifiers.SetPlayerNumber)
         {
@@ -238,6 +237,14 @@ public class NetworkedClient : MonoBehaviour
             gameSystemManager.GetComponent<SystemManager>().ChangeState(GameStates.Observer);
         }
 
+        else if (signifier == ServerToClientSignifiers.RematchConfirmed)
+        {
+            gameboard.GetComponent<Gameboard>().Rematch();
+            gameSystemManager.GetComponent<SystemManager>().ChangeState(GameStates.Game);
+            SendMessageToHost(ClientToServerSignifiers.PlayGame + "");
+
+            Debug.Log("Rematch");
+        }
     }
 
     public bool IsConnected()
@@ -263,7 +270,9 @@ public static class ClientToServerSignifiers
 
     public const int PlayerMessage = 7;
 
-    public const int RequestReplayMove = 8; 
+    public const int RequestReplayMove = 8;
+
+    public const int PlayerRequestRematch = 9;
 }
 
 public static class ServerToClientSignifiers
@@ -293,6 +302,8 @@ public static class ServerToClientSignifiers
     public const int JoinAsObserver = 12;
 
     public const int ReplayMove = 13;
+
+    public const int RematchConfirmed = 14;
 }
 
 
