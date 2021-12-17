@@ -219,6 +219,12 @@ public class SystemManager : MonoBehaviour
                 gameResultText.GetComponent<Text>().text = "Game Over!";
                 break;
 
+            //Tie Game End 
+            case 4:
+                endPanelBackground.GetComponent<Image>().color = Color.green;
+                gameResultText.GetComponent<Text>().text = "Tie Game! No Winner!";
+                break;
+
             default:
                 break;
         }
@@ -280,6 +286,10 @@ public class SystemManager : MonoBehaviour
         else if(newState == GameStates.ObserverEnd)
         {
             DisplayEndScreen(3);
+        }
+        else if (newState == GameStates.TieGame)
+        {
+            DisplayEndScreen(4);
         }
     }
 
@@ -432,4 +442,6 @@ public static class GameStates
     public const int Observer = 8;
 
     public const int ObserverEnd = 9;
+
+    public const int TieGame = 10;
 }

@@ -32,6 +32,8 @@ public class Gameboard : MonoBehaviour
     public bool IsThisPlayersTurn = false;
     public bool IsObersever = false;
 
+    private int numOfNodesFull = 0;
+
     private void Awake()
     {
         //Game Singleton Setup
@@ -73,17 +75,22 @@ public class Gameboard : MonoBehaviour
     {
         nodes[nodeIndex].UpdateNode(nodeMark);
 
-
         //After updating the gameboard, check for win
         bool hasWon = CheckForWin();
+
+        bool hasTied = CheckForTie();
 
         if (hasWon)
         {
             //This Player has won
-
             Debug.Log("Player Win!");
 
             networkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifiers.PlayerWin + "");
+        }
+
+        if (hasTied)
+        {
+            networkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifiers.TieGame + "");
         }
     }
 
@@ -102,6 +109,8 @@ public class Gameboard : MonoBehaviour
 
     private void ClearGameBoard()
     {
+        numOfNodesFull = 0;
+
         foreach (Node node in nodes)
         {
             node.ResetNode();
@@ -114,6 +123,21 @@ public class Gameboard : MonoBehaviour
         ClearGameBoard();
     }
 
+
+    public bool CheckForTie()
+    {
+        numOfNodesFull += 1;
+
+        Debug.Log("Number of Tiles Full: " + numOfNodesFull);
+
+        if (numOfNodesFull == 9)
+        {
+            Debug.Log("Tie");
+
+            return true;
+        }
+        return false;
+    }
 
     //
     // Game Win Condition Check

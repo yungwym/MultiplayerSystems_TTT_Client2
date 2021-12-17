@@ -206,6 +206,12 @@ public class NetworkedClient : MonoBehaviour
                     gameSystemManager.GetComponent<SystemManager>().ChangeState(GameStates.ObserverEnd);
                     break;
 
+                case 4:
+                    //Tie Game 
+                    Debug.Log("Tie Game");
+                    gameSystemManager.GetComponent<SystemManager>().ChangeState(GameStates.TieGame);
+                    break;
+
                 default:
                     break;
             } 
@@ -273,6 +279,8 @@ public static class ClientToServerSignifiers
     public const int RequestReplayMove = 8;
 
     public const int PlayerRequestRematch = 9;
+
+    public const int TieGame = 10;
 }
 
 public static class ServerToClientSignifiers
